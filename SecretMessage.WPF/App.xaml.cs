@@ -4,9 +4,10 @@ using Firebase.Auth;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SecretMessage.WPF.ViewModels;
 
 namespace SecretMessage.WPF
-{
+{ 
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
@@ -25,7 +26,10 @@ namespace SecretMessage.WPF
 
                     service.AddSingleton(new FirebaseAuthProvider(new FirebaseConfig(firebaseApiKey)));
                     
-                    service.AddSingleton<MainWindow>((services) => new MainWindow());
+                    service.AddSingleton<MainWindow>((services) => new MainWindow()
+                    {
+                        DataContext = new RegisterViewModel(services.GetRequiredService<FirebaseAuthProvider>())
+                    });
                 })
                 .Build();
         }

@@ -4,9 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SecretMessage.WPF"
+        xmlns:views="clr-namespace:SecretMessage.WPF.Views"
         mc:Ignorable="d"
-        Title="SecretMessage" Height="450" Width="800">
+        Title="SecretMessage" 
+        Height="450" 
+        Width="800">
     <Grid>
-
+        <views:RegisterView />
     </Grid>
 </Window>

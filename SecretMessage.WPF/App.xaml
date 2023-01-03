@@ -1,7 +1,18 @@
 ﻿<Application x:Class="SecretMessage.WPF.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:components="clr-namespace:PasswordBoxMVVM.Components;assembly=PasswordBoxMVVM">
     <Application.Resources>
-         
+        <Style TargetType="TextBox">
+            <Setter Property="Padding" Value="2" />
+        </Style>
+
+        <Style TargetType="PasswordBox">
+            <Setter Property="Padding" Value="2" />
+        </Style>
+        
+        <Style TargetType="Button">
+            <Setter Property="Padding" Value="10 5" />
+        </Style>
     </Application.Resources>
 </Application>
