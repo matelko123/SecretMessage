@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Navigation;
 using Firebase.Auth;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MVVMEssentials.Services;
+using MVVMEssentials.Stores;
+using MVVMEssentials.ViewModels;
 using SecretMessage.WPF.ViewModels;
 
 namespace SecretMessage.WPF
@@ -25,10 +29,29 @@ namespace SecretMessage.WPF
                                             ?? throw new ArgumentNullException("FIREBASE_API_KEY");
 
                     service.AddSingleton(new FirebaseAuthProvider(new FirebaseConfig(firebaseApiKey)));
-                    
+
+                    service.AddSingleton<NavigationStore>();
+                    service.AddSingleton<ModalNavigationStore>();
+
+                    service.AddSingleton<NavigationService<RegisterViewModel>>(
+                        (services) => new NavigationService<RegisterViewModel>(
+                            services.GetRequiredService<NavigationStore>(),
+                            () => new RegisterViewModel(
+                                services.GetRequiredService<FirebaseAuthProvider>(),
+                                services.GetRequiredService<NavigationService<LoginViewModel>>())));
+
+                    service.AddSingleton<NavigationService<LoginViewModel>>(
+                        (services) => new NavigationService<LoginViewModel>(
+                            services.GetRequiredService<NavigationStore>(),
+                            () => new LoginViewModel(
+                                services.GetRequiredService<FirebaseAuthProvider>(),
+                                services.GetRequiredService<NavigationService<RegisterViewModel>>())));
+
+                    service.AddSingleton<MainViewModel>();
+
                     service.AddSingleton<MainWindow>((services) => new MainWindow()
                     {
-                        DataContext = new RegisterViewModel(services.GetRequiredService<FirebaseAuthProvider>())
+                        DataContext = services.GetRequiredService<MainViewModel>()
                     });
                 })
                 .Build();
@@ -36,6 +59,9 @@ namespace SecretMessage.WPF
         
         protected override void OnStartup(StartupEventArgs e)
         {
+            var navigationService = _host.Services.GetRequiredService<NavigationService<LoginViewModel>>();
+            navigationService.Navigate();
+
             MainWindow = _host.Services.GetRequiredService<MainWindow>();
             MainWindow.Show();
 

@@ -55,14 +55,9 @@
                 Grid.Row="5" 
                 Content="Already have an account? Login" 
                 Margin="0 10 0 0" 
-                Command="{Binding NavigateLoginCommand}">
-                <Button.Style>
-                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                        <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="BorderThickness" Value="0"/>
-                    </Style>
-                </Button.Style>
-            </Button>
+                Command="{Binding NavigateLoginCommand}"
+                Style="{StaticResource ButtonTransparent}"/>
+
         </Grid>
     </Grid>
 </UserControl>

@@ -5,11 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SecretMessage.WPF"
         xmlns:views="clr-namespace:SecretMessage.WPF.Views"
+        xmlns:vms="clr-namespace:SecretMessage.WPF.ViewModels"
         mc:Ignorable="d"
         Title="SecretMessage" 
         Height="450" 
         Width="800">
+    
     <Grid>
-        <views:RegisterView />
+        <ContentControl Content="{Binding CurrentViewModel}" >
+            <ContentControl.Resources>
+                <DataTemplate DataType="{x:Type vms:RegisterViewModel}">
+                    <views:RegisterView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vms:LoginViewModel}">
+                    <views:LoginView />
+                </DataTemplate>
+            </ContentControl.Resources>
+        </ContentControl>
     </Grid>
+    
 </Window>
