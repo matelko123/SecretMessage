@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using MVVMEssentials.Services;
+using SecretMessage.WPF.Stores;
 
 namespace SecretMessage.WPF.ViewModels
 {
@@ -39,9 +40,9 @@ namespace SecretMessage.WPF.ViewModels
         public ICommand SubmitCommand { get; }
         public ICommand NavigateRegisterCommand { get; }
 
-        public LoginViewModel(FirebaseAuthProvider firebaseAuthProvider, NavigationService<RegisterViewModel> registerNavigationService)
+        public LoginViewModel(AuthenticationStore authenticationStore ,INavigationService registerNavigationService, INavigationService homeNavigationService)
         {
-            SubmitCommand = new LoginCommand(this, firebaseAuthProvider);
+            SubmitCommand = new LoginCommand(this, authenticationStore, homeNavigationService);
             NavigateRegisterCommand = new NavigateCommand(registerNavigationService);
         }
     }
